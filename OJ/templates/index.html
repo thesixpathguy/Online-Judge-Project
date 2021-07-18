@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {%block title%}Home{%endblock title%} {%block body%}
+{% for i in questions %}
+
+<div class="container m-3 mx-auto">
+  <div class="card">
+    <div class="card-header">Problem {{i.question_id}}</div>
+    <div class="card-body">
+      <h5 class="card-title">{{i.name}}</h5>
+      <p class="card-text">{{i.topics}}</p>
+      <p>
+        <a href={% url 'problem' id=i.question_id %} class="btn btn-primary"
+          >Solve!</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
+{% endfor %} {%endblock body%}

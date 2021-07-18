@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {%block title%}Home{%endblock title%} {%block body%}
+{% for i in results %}
+
+<div class="container m-3 mx-auto">
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item">{{i.name}}</li>
+    <li class="list-group-item">{{i.verdict}}</li>
+    <li class="list-group-item">{{i.datetime}}</li>
+    &nbsp
+    <a href="">code</a>
+    &nbsp &nbsp
+    <a href={% url 'problem' id=i.question_id %}>problem</a>
+  </ul>
+</div>
+{% endfor %} {%endblock body%}

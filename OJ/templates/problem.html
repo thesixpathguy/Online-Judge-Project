@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {%block title%}Home{%endblock title%} {%block body%}
+<pre class="my-2 mx-3">{{ques.text}}</pre>
+<div class="container">
+    <form method="post" action={% url 'submitsol' id=ques_id %}>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Paste Your Code Here</label>
+            <textarea class="form-control" id="solution" name="solution" rows="20"></textarea>
+            <button class="btn btn-primary my-3">Submit</button>
+        </div>
+    </form>
+</div>
+
+{%endblock body%}
