@@ -6,7 +6,6 @@ import os
 
 # Create your views here.
 
-
 def index(request):
     arr = Question.objects.all()
     context = {
@@ -36,10 +35,23 @@ def checker(question_id, code, input, output):
     file_output = open('output.txt', 'w')
     file_output.write(output)
     file_output.close()
-    os.system('docker build -t test .')
-    os.system('docker run --name checker test ')
+    # os.system('docker build -t test .')
+    # os.system('docker run --name checker test ')
+    os.system('docker cp input.txt checker:usr\src\cpp_test')
+    os.system('docker cp test.cpp checker:usr\src\cpp_test')
+    os.system(
+        'docker exec --workdir /usr/src/cpp_test checker  g++ -o main test.cpp')
+    os.system(
+        'docker exec --workdir /usr/src/cpp_test checker  ./main <input.txt | output1.txt')
+    # os.system(
+    # 'docker exec --workdir /usr/src/cpp_test checker  cat output1.txt')
+    os.system('docker exec --workdir /usr/src/cpp_test checker rm input.txt')
+    os.system('docker exec --workdir /usr/src/cpp_test checker rm test.cpp')
     os.system('docker cp checker:/usr/src/cpp_test/output1.txt .')
-    os.system('docker rm -f checker')
+    os.system('docker exec --workdir /usr/src/cpp_test checker rm output1.txt')
+    os.system('docker exec --workdir /usr/src/cpp_test checker rm main')
+    # os.system('output1.txt')
+    # os.system('docker rm -f checker')
     flg = os.system('FC /W output.txt output1.txt')
     if flg == 1:
         verdict = "wrong answer"
